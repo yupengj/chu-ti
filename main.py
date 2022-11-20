@@ -78,6 +78,8 @@ def chu_ti():
     # 清空所有数据
     tis = question_bank.chu_ti(100, resultValue.get(), optCountValue.get(), countValue.get())
     html = html_template.shi_juan(tis, 3, 14)
+    if len(print_html) > 0:
+        del print_html[0]
     print_html.append(html)
     tiMuEntity.set_html(html)
 
