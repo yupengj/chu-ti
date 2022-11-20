@@ -1,12 +1,13 @@
 from tkinter import *
 from tkinter import ttk
-from tkhtmlview import HTMLLabel, HTMLText
+from tkhtmlview import HTMLText
 import win32api
 import win32print
 import tempfile
 import pdfkit
 import shijuan
 import suanshu
+import subprocess
 
 print_html = []
 
@@ -34,8 +35,8 @@ printerValue = StringVar()
 printerEntity = ttk.Combobox(root, textvariable=printerValue)
 printerEntity['values'] = get_printer_list()
 printerValue.set("Canon TS3300 series")
-printerLab.place(x=50, y=10, width=100, anchor='nw')
-printerEntity.place(x=160, y=10, width=200, anchor='nw')
+printerLab.place(x=0, y=10, width=100, anchor='nw')
+printerEntity.place(x=90, y=10, width=200, anchor='nw')
 
 
 def html_to_pdf(html_file):
@@ -81,9 +82,20 @@ def chu_ti():
     tiMuEntity.set_html(html)
 
 
-Button(root, text="出题", command=chu_ti).place(x=10, y=80)
+# 下载PDF文件
+def download_pdf():
+    filename = tempfile.mktemp(".html")
+    open(filename, "w", encoding="UTF-8").write(print_html[0])
+    pdf_name = html_to_pdf(filename)
+    print(pdf_name)
+    subprocess.Popen([pdf_name], shell=True)
 
-Button(root, text="打印", command=start_print).place(x=10, y=10)
+
+Button(root, text="出题", command=chu_ti).place(x=10, y=90)
+
+Button(root, text="打印", command=start_print).place(x=100, y=90)
+
+Button(root, text="下载PDF", command=download_pdf).place(x=200, y=90)
 
 # 总题数
 countLab = Label(root, text="一共有几道题")
@@ -120,6 +132,6 @@ resultEntity.place(x=690, y=50, width=80, anchor='nw')
 
 # 出题结果
 tiMuEntity = HTMLText(root)
-tiMuEntity.place(x=10, y=120, width=max_width - 20, height=800)
+tiMuEntity.place(x=10, y=130, width=max_width - 20, height=870)
 
 root.mainloop()

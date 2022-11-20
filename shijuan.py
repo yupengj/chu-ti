@@ -15,7 +15,7 @@ def shi_juan(tis, column_count: 3, space: 8):
         # 算式编号
         index = str(tis.index(item) + 1) + "."
         # 算式 html 标签
-        item_html = "<span style='font-size:16px;'>" + index + "</span>" + (start_len * " ") + item
+        item_html = "<span style='font-size:16px;'>" + index + "</span>" + (start_len * " ") + "<b>" + item + "</b>"
 
         if column_count_temp == 1:
             html = html + "<pre style='font-size:24px;'>"
