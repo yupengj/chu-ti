@@ -4,9 +4,11 @@ from tkhtmlview import HTMLLabel, HTMLText
 import win32api
 import win32print
 import tempfile
-
+import pdfkit
 import shijuan
 import suanshu
+
+print_html = []
 
 max_width = 1300
 max_height = 1000
@@ -36,20 +38,33 @@ printerLab.place(x=50, y=10, width=100, anchor='nw')
 printerEntity.place(x=160, y=10, width=200, anchor='nw')
 
 
+def html_to_pdf(html_file):
+    # Define path to wkhtmltopdf.exe
+    path_to_wkhtmltopdf = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
+
+    # Point pdfkit configuration to wkhtmltopdf.exe
+    config = pdfkit.configuration(wkhtmltopdf=path_to_wkhtmltopdf)
+
+    output_path = tempfile.mktemp(".pdf")
+    # Convert HTML file to PDF
+    pdfkit.from_file(html_file, output_path=output_path, configuration=config)
+
+    return output_path
+
+
 # 开始打印方法
 def start_print():
-    result_text = tiMuEntity.get("1.0", END)
-    print("打印内容：" + result_text)
+    # result_text = tiMuEntity.get("1.0", END)
+    print("打印内容：" + print_html[0])
     printer = printerEntity.get()
     print("打印机：" + printer)
-    filename = tempfile.mktemp(".txt")
-    open(filename, "w", encoding="UTF-8").write(result_text)
-
-    # filename = "C:\\Users\\jyp10\\Downloads\\aaa.pdf"
-    # open(filename, "w", encoding="UTF-8")
+    filename = tempfile.mktemp(".html")
+    open(filename, "w", encoding="UTF-8").write(print_html[0])
     print(filename)
+    pdf_name = html_to_pdf(filename)
+    print(pdf_name)
 
-    win32api.ShellExecute(0, "print", filename, '"%s"' % printer, ".", 0)
+    win32api.ShellExecute(0, "print", '"%s"' % pdf_name, '"%s"' % printer, ".", 0)
 
 
 # 出题方法
@@ -61,9 +76,8 @@ def chu_ti():
 
     # 清空所有数据
     tis = suanshu.chu_ti(100, resultValue.get(), optCountValue.get(), countValue.get())
-    print(tis)
-    html = shijuan.shi_juan(tis, 3, 10)
-    print(html)
+    html = shijuan.shi_juan(tis, 3, 14)
+    print_html.append(html)
     tiMuEntity.set_html(html)
 
 
