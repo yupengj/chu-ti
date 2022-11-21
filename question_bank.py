@@ -17,7 +17,7 @@ def chu_ti(itemMax, resultMax, itemCount, count):
                 break
         if len(ti) > 0:
             result = eval(ti)
-            if result > 0 & result < resultMax:
+            if 0 < result < resultMax:
                 tis.append(ti + "=")
         if len(tis) == count:
             break
