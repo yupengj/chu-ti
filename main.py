@@ -103,7 +103,7 @@ Button(root, text="下载PDF", command=download_pdf).place(x=200, y=90)
 countLab = Label(root, text="一共有几道题")
 countValue = IntVar()
 countEntity = Entry(root, width=6, textvariable=countValue)
-countValue.set(50)
+countValue.set(60)
 countLab.place(x=50, y=50, width=100, anchor='nw')
 countEntity.place(x=150, y=50, width=80, anchor='nw')
 

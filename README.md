@@ -6,8 +6,26 @@
 
 # 导出 exe 文件
 
-pyinstaller -F -w -i 'D:\sourceCode\chu-ti\logo.ico' -n chuti 'D:\sourceCode\chu-ti\main.py'
+```commandline
+pyinstaller -D -w 'D:\sourceCode\chu-ti\main.py' -p 'D:\sourceCode\chu-ti\html_template.py' -p 'D:\sourceCode\chu-ti\question_bank.py' -p 'D:\sourceCode\chu-ti\venv\Lib\site-packages' -p 'D:\sourceCode\chu-ti\venv\Lib\site-packages\pywin32_system32' -i 'D:\sourceCode\chu-ti\logo.ico' 
+```
 
-pyinstaller -F -p 'D:\sourceCode\chu-ti\Lib' -w -n chuti 'D:\sourceCode\chu-ti\main.py'
+## 遇到错误1
 
-pyinstaller -D -w 'D:\sourceCode\chu-ti\main.py' -p 'D:\sourceCode\chu-ti\html_template.py' -p 'D:\sourceCode\chu-ti\question_bank.py'
+```
+Traceback (most recent call last):
+  File "main.py", line 3, in <module>
+ModuleNotFoundError: No module named 'tkhtmlview'
+```
+
+增加 -p 'D:\sourceCode\chu-ti\venv\Lib\site-packages'
+
+## 遇到错误2
+
+```
+Traceback (most recent call last):
+  File "main.py", line 4, in <module>
+ImportError: DLL load failed while importing win32api: 找不到指定的模块。
+```
+
+增加 -p 'D:\sourceCode\chu-ti\venv\Lib\site-packages\pywin32_system32'
